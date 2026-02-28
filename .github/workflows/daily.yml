@@ -29,6 +29,18 @@ jobs:
       - name: Run scanner
         run: |
           python scanner.py
+                - name: Email Top 10 CSV
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.SMTP_HOST }}
+          server_port: ${{ secrets.SMTP_PORT }}
+          username: ${{ secrets.SMTP_USER }}
+          password: ${{ secrets.SMTP_PASS }}
+          subject: "Nifty50 Swing Scanner - Top 10"
+          to: ${{ secrets.EMAIL_TO }}
+          from: ${{ secrets.SMTP_USER }}
+          body: "Attached is today's Top 10 swing scan output."
+          attachments: top10_swing_today.csv
 
       - name: Commit updated CSV
         run: |
