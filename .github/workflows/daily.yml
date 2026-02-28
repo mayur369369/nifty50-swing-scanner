@@ -2,8 +2,7 @@ name: Daily Nifty50 Swing Scan
 
 on:
   schedule:
-    # Runs Monday-Friday at 7:00 PM IST (13:30 UTC)
-    - cron: "30 13 * * 1-5"
+    - cron: "30 13 * * 1-5"   # Mon-Fri 13:30 UTC (~19:00 IST)
   workflow_dispatch:
 
 permissions:
@@ -12,7 +11,6 @@ permissions:
 jobs:
   run-scan:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -29,7 +27,8 @@ jobs:
       - name: Run scanner
         run: |
           python scanner.py
-                - name: Email Top 10 CSV
+
+      - name: Email Top 10 CSV
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: ${{ secrets.SMTP_HOST }}
